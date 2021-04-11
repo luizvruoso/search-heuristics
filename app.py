@@ -12,7 +12,7 @@ def main():
     #mapScreen.screen(openScreen)
 
     search = BlindSearch()
-    search.getChildrenItem(openScreen.startPosition, openScreen.sketchMatrix)
+    search.blindSearch(openScreen.startPosition, openScreen.finishPosition, openScreen.sketchMatrix)
     
 
 
