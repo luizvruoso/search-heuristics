@@ -1,0 +1,34 @@
+{
+        "position": {
+            "ACTUAL_POSITION": -1,
+            "TARGET_POSITION": -9999
+        },
+        "colors": {
+                "GREEN": "(151, 224, 103)",
+                "BROWN": "(119, 93, 68)",
+                "BLUE": "(84, 194, 234)",
+                "RED": "(201, 94, 82)",
+                "WHITE": "(255, 250, 250)", 
+                "BLACK": "(0, 0, 0)",
+                "color-weight": {
+                        "1": 1,
+                        "2": 5,
+                        "3": 10,
+                        "4": 15
+                }
+        },
+        "matrix": {
+                "matrix-max-column": 42,
+                "matrix-max-row": 42
+        },
+        "general": {
+                "pygame": {
+                        "WINDOW_SIZE": "[505, 505]",
+                        "WIDTH": 11,
+                        "HEIGHT": 11,
+                        "MARGIN": 1
+                }
+        }
+
+
+}
