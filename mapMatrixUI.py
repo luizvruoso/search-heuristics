@@ -14,17 +14,20 @@ class Map:
         self.WHITE = (255, 250, 250) 
         self.BLACK = (0, 0, 0) 
 
-    def screen(self, objectSource): 
-       # print(len(grid))
+    def screen(self, objectSource, arrayColor): 
+        
 
         initialPosition = objectSource.startPosition
         finishPosition =  objectSource.finishPosition
 
-        objectSource.sketchMatrix[initialPosition[0]][initialPosition[1]] = ACTUAL_POSITION
+        arrayColor.append(initialPosition) 
+        arrayColor.append(initialPosition) 
+
+       
+        #objectSource.sketchMatrix[initialPosition[0]][initialPosition[1]] = ACTUAL_POSITION
         objectSource.sketchMatrix[finishPosition[0]][finishPosition[1]] = TARGET_POSITION
         
         grid = objectSource.sketchMatrix
-
         pygame.init()
         # This sets the WIDTH and HEIGHT of each grid location
         WIDTH = 11
@@ -37,16 +40,24 @@ class Map:
         done = False
         clock = pygame.time.Clock()
 
+       
+        
+
         while not done:
+            #grid = search.grid
+            #print(grid)
+            #print(grid)
             for event in pygame.event.get():  # User did something
                 if event.type == pygame.QUIT:  # If user clicked close
                     done = True  # Flag that we are done so we exit this loop
 
+
+
             for row in range(42):
                 #print(grid[row])
                 for column in range(42):
-                    if grid[row][column] == ACTUAL_POSITION:
-                        color = self.WHITE 
+                    #if grid[row][column] == ACTUAL_POSITION:
+                    #    color = self.WHITE 
                     if grid[row][column] == TARGET_POSITION:
                         color = self.BLACK
                     if grid[row][column] == 1:
@@ -62,8 +73,15 @@ class Map:
                         (MARGIN + HEIGHT) * row + MARGIN,
                         WIDTH,
                         HEIGHT])
-
-            clock.tick(60)
+            for row in arrayColor:
+                color = self.WHITE 
+                pygame.draw.rect(screen,color,
+                        [(MARGIN + WIDTH) * row[1] + MARGIN,
+                        (MARGIN + HEIGHT) * row[0] + MARGIN,
+                        WIDTH,
+                        HEIGHT])
+           
+            clock.tick(5)
             pygame.display.flip()
         
         pygame.quit()
