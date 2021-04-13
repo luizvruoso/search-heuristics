@@ -7,38 +7,33 @@ import pygame, threading
 def main():
     openScreen = OpenScreen()
     openScreen.screen()
-    arrayColor = []
+    arrayColorFinalResult = []
+    arrayColorFrontier = []
+    arrayColorActualPosition =[]
     #thread = aux(openScreen)
 
- 
-
-    t = threading.Thread(target=mainScreen, args=[openScreen, arrayColor] )
+    
+    t = threading.Thread(target=mainScreen, args=[openScreen, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier] )
     
     #t1 = threading.Thread(target=aux, args=[openScreen])
 
     #t1.start()
-    t.start()
     
+    t.start()
     search = BlindSearch()
-    search.blindSearch(openScreen.startPosition, openScreen.finishPosition, openScreen.sketchMatrix, arrayColor)
+    t1 = threading.Thread(target=search.blindSearch, args=[openScreen.startPosition, openScreen.finishPosition, openScreen.sketchMatrix, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier] )
+
+    t1.start()
+
+
+    #search.blindSearch(openScreen.startPosition, openScreen.finishPosition, openScreen.sketchMatrix, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier)
        
 
 
 
-def mainScreen(openScreen, arrayColor):
+def mainScreen(openScreen, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
     mapScreen = Map()
-
-
-
-
-    mapScreen.screen(openScreen, arrayColor)
-    return
-
-
-
-
-def aux(openScreen):
-   
+    mapScreen.screen(openScreen, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier)
     return
 
 if __name__ == "__main__":
