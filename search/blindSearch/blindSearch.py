@@ -1,19 +1,17 @@
 from search.item import ItemSearch
 from mapMatrixUI import Map
-from threading import Thread
-import time
+import time, threading
 import json
 
 #BUSCA CEGA COM CUSTO UNIFORME
-class BlindSearch(Thread):
+class BlindSearch():
     
     MATRIX_SIZE = 42
 
 
     def __init__(self):
-        Thread.__init__(self)
+        #Thread.__init__(self)
         self.grid = []
-        self.start()
 
     def getCostByValue(self, value):
         if(value == 1):
@@ -56,17 +54,11 @@ class BlindSearch(Thread):
             #print(actual[0].actualPosition)
 
             while(True):
-                if(ALREADY_VISITED.count(actual[0].actualPosition) <= 3):
-                   ALREADY_VISITED.append(actual[0].actualPosition)
-                   #aux = actual[0].actualPosition
-                   #f.write(str(aux)+"\n")
-
-                   break
+                if(ALREADY_VISITED.count(actual[0].actualPosition) <= 1):
+                    ALREADY_VISITED.append(actual[0].actualPosition)
+                    break
                 else:
                    actual = LIST_FRONTIER.pop(0)
-
-            
-
 
             #for item in LIST_FRONTIER:
                 #ctrl = -1
@@ -92,6 +84,7 @@ class BlindSearch(Thread):
                 for item in finalResult:
                     print("Resultado ")
                     print(item[0].historyCalls)
+                    print(item[0].totalCost)
                     time.sleep(3)
                     arrayColorFrontier.clear()
                     arrayColorActualPosition.clear()
@@ -123,15 +116,25 @@ class BlindSearch(Thread):
             arrayColorFrontier.clear()
             for item in LIST_FRONTIER:
                 arrayColorFrontier.append(item[0].actualPosition)
-                aux = "item", item[0].cost, "position", item[0].actualPosition
+                #aux = "item", item[0].cost, "position", item[0].actualPosition
                 #f.write(str(aux)+"\n")
-            
+
+            #t1 = threading.Thread(target=self.printMatrixColorFrontier,
+            #                      args=[LIST_FRONTIER, arrayColorFrontier])
+
+           # t1.start()
+
+
             #print("item", item[0].cost, "value", item[0].actualPosition)
         
         f.close()
         
 
-        
+    def printMatrixColorFrontier(self, LIST_FRONTIER, arrayColorFrontier):
+        arrayColorFrontier.clear()
+        for item in LIST_FRONTIER:
+            arrayColorFrontier.append(item[0].actualPosition)
+        return
 
 
 
@@ -163,7 +166,6 @@ class BlindSearch(Thread):
 
 
     def makeItem(self, actualPosition, grid, costToAdd, whoCalled):
-        
         ACTUAL_POSITION_X = actualPosition[0]
         ACTUAL_POSITION_Y = actualPosition[1]
         VALUE_POSITION = grid[ACTUAL_POSITION_X][ACTUAL_POSITION_Y]
@@ -176,35 +178,45 @@ class BlindSearch(Thread):
         item = ItemSearch(actualPosition, COST_POSITION, TOTAL_COST_POSITION,None, whoCalled)
         
         i = 0
-        #verifica numero a direita
+        #verifica numero a abaixo
         if(ACTUAL_POSITION_X + 1 <= 41):
             childrenArray.append([])
             childrenArray[i].append(ACTUAL_POSITION_X + 1)
             childrenArray[i].append(ACTUAL_POSITION_Y)
+            #print(item.historyCalls.count(childrenArray[i]))
             i+=1
-        #verifica numero abaixo
+
+        #verifica numero direita
         if(ACTUAL_POSITION_Y + 1 <= 41):
             childrenArray.append([])
             childrenArray[i].append(ACTUAL_POSITION_X)
             childrenArray[i].append(ACTUAL_POSITION_Y + 1)
             i+=1
 
-        #verifica numero a esquerda
+        #verifica numero a cima
         if( (ACTUAL_POSITION_X - 1) >= 0 ):
             childrenArray.append([])
             childrenArray[i].append(ACTUAL_POSITION_X - 1)
             childrenArray[i].append(ACTUAL_POSITION_Y)
             i+=1
-        #verifica numero acima
+
+        #verifica numero esquerda
         if(ACTUAL_POSITION_Y - 1 >= 0):
             childrenArray.append([])
             childrenArray[i].append(ACTUAL_POSITION_X)
             childrenArray[i].append(ACTUAL_POSITION_Y - 1)
             i+=1
-        
-        
+            
+
+        #aux = []
+        #for j in range(len(childrenArray)):
+        #    if(item.historyCalls.count(childrenArray[j]) == 0):
+        #        aux.append(childrenArray[j])
+
+
 
         item.children = childrenArray
+
         return item
         
         

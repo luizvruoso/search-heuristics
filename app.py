@@ -9,7 +9,7 @@ def main():
     openScreen.screen()
     arrayColorFinalResult = []
     arrayColorFrontier = []
-    arrayColorActualPosition =[]
+    arrayColorActualPosition = []
     #thread = aux(openScreen)
 
     
