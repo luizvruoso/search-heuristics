@@ -81,6 +81,7 @@ class Map:
                         WIDTH,
                         HEIGHT])
 
+
             for row in arrayColorFrontier:
                 color = self.DARK_GREY 
                 pygame.draw.rect(screen,color,
@@ -91,7 +92,7 @@ class Map:
             for row in arrayColorActualPosition:
                 color = self.PINK 
                 pygame.draw.rect(screen,color,
-                        [(MARGIN + WIDTH) * row[1] + MARGIN,
+                       [(MARGIN + WIDTH) * row[1] + MARGIN,
                         (MARGIN + HEIGHT) * row[0] + MARGIN,
                         WIDTH,
                         HEIGHT])
