@@ -15,20 +15,20 @@ class BlindSearch():
         self.grid = []
 
     def getCostByValue(self, value):
-        if(value == 1):
-            return 2
-        elif(value == 2):
+        if value == 1:
+            return 1
+        elif value == 2:
             return 5
-        elif(value == 3):
+        elif value == 3:
             return 10
-        elif(value == 4):
+        elif value == 4:
             return 15
-        
 
         return 0
     
     def setMatrix(self, value):
         self.grid = value
+
     def getMatrix(self):
         return self.grid
 
@@ -40,9 +40,6 @@ class BlindSearch():
 
     def sortItemsTotal(self, item):
         return item[0].totalCost
-
-
-
 
     def blindSearch(self, initialPosition, targetPosition, grid, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
         #print(grid)
@@ -158,35 +155,6 @@ class BlindSearch():
         for item in LIST_FRONTIER:
             arrayColorFrontier.append(item[0].getActualPosition())
         return
-
-
-
-    def isAdjacent(self, position, targetPosition):
-        ACTUAL_POSITION_X = position[0]
-        ACTUAL_POSITION_Y = position[1]
-
-        TARGET_POSITION_X = targetPosition[0].actualPosition[0]
-        TARGET_POSITION_Y = targetPosition[0].actualPosition[1]
-
-        #PODE IR A DIREITA
-        if( (ACTUAL_POSITION_X + 1) <= 41 and ACTUAL_POSITION_Y == TARGET_POSITION_Y):
-            return True
-
-        #PODE IR A BAIXO
-        if( ACTUAL_POSITION_X ==  TARGET_POSITION_X and ACTUAL_POSITION_Y + 1 <= 41):
-            return True
-        #PODE IR A ESQUERDA
-        if( (ACTUAL_POSITION_X - 1) >= 0 and ACTUAL_POSITION_Y == TARGET_POSITION_Y):
-            return True       
-            
-        #PODE IR A ACIMA
-        if( ACTUAL_POSITION_X ==  TARGET_POSITION_X and ACTUAL_POSITION_Y - 1 >= 0):
-            return True
-
-        
-
-        return False
-
 
     def makeItem(self, actualPosition, costToAdd, whoCalled):
         ACTUAL_POSITION_X = actualPosition.getX()
