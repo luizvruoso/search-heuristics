@@ -36,5 +36,6 @@ def mainScreen(openScreen, arrayColorActualPosition, arrayColorFinalResult, arra
     mapScreen.screen(openScreen, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier)
     return
 
+
 if __name__ == "__main__":
     main()

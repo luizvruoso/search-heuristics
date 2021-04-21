@@ -23,10 +23,10 @@ class Map:
         finishPosition =  objectSource.finishPosition
 
         #arrayColor.append(initialPosition) 
-        arrayColorFinalResult.append(initialPosition) 
+        arrayColorFinalResult.append(initialPosition.getActualPosition())
 
         #objectSource.sketchMatrix[initialPosition[0]][initialPosition[1]] = ACTUAL_POSITION
-        objectSource.sketchMatrix[finishPosition[0]][finishPosition[1]] = TARGET_POSITION
+        objectSource.sketchMatrix[finishPosition.getX()][finishPosition.getY()] = TARGET_POSITION
         
         grid = objectSource.sketchMatrix
         pygame.init()
@@ -73,30 +73,31 @@ class Map:
                         WIDTH,
                         HEIGHT])
 
-            for row in arrayColorFinalResult:
-                color = self.WHITE 
-                pygame.draw.rect(screen,color,
-                        [(MARGIN + WIDTH) * row[1] + MARGIN,
-                        (MARGIN + HEIGHT) * row[0] + MARGIN,
-                        WIDTH,
-                        HEIGHT])
+            #print("UIadadsa",arrayColorFinalResult)
 
+            for row in arrayColorFinalResult:
+                color = self.WHITE
+                pygame.draw.rect(screen, color,
+                                 [(MARGIN + WIDTH) * row[1] + MARGIN,
+                                  (MARGIN + HEIGHT) * row[0] + MARGIN,
+                                  WIDTH,
+                                  HEIGHT])
 
             for row in arrayColorFrontier:
-                color = self.DARK_GREY 
-                pygame.draw.rect(screen,color,
-                        [(MARGIN + WIDTH) * row[1] + MARGIN,
-                        (MARGIN + HEIGHT) * row[0] + MARGIN,
-                        WIDTH,
-                        HEIGHT])
+                color = self.DARK_GREY
+                pygame.draw.rect(screen, color,
+                                 [(MARGIN + WIDTH) * row[1] + MARGIN,
+                                  (MARGIN + HEIGHT) * row[0] + MARGIN,
+                                  WIDTH,
+                                  HEIGHT])
             for row in arrayColorActualPosition:
-                color = self.PINK 
-                pygame.draw.rect(screen,color,
-                       [(MARGIN + WIDTH) * row[1] + MARGIN,
-                        (MARGIN + HEIGHT) * row[0] + MARGIN,
-                        WIDTH,
-                        HEIGHT])
-           
+                color = self.PINK
+                pygame.draw.rect(screen, color,
+                                 [(MARGIN + WIDTH) * row[1] + MARGIN,
+                                  (MARGIN + HEIGHT) * row[0] + MARGIN,
+                                  WIDTH,
+                                  HEIGHT])
+
             clock.tick(10)
             pygame.display.flip()
         

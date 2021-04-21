@@ -5,6 +5,7 @@ from tkinter import ttk
 from utils.arrayTreatment import arrayContentToInt
 from search.blindSearch.blindSearch import BlindSearch
 from mapMatrixUI import Map
+from search.item import ItemSearch
 
 import threading
 
@@ -28,11 +29,13 @@ class OpenScreen:
                 f = open("index.txt", 'r')
 
                 auxReadLine = f.readline()
-                self.startPosition = arrayContentToInt(auxReadLine.strip().split(","))
+                auxPosition = arrayContentToInt(auxReadLine.strip().split(","))
+                self.startPosition = ItemSearch(auxPosition, 0, 0, None, None)
 
                 auxReadLine = f.readline()
-                
-                self.finishPosition = arrayContentToInt(auxReadLine.strip().split(","))
+
+                auxPosition = arrayContentToInt(auxReadLine.strip().split(","))
+                self.finishPosition = ItemSearch(auxPosition, 0, 0, None, None)
 
                 file_contents = f.read() 
                 file_contents = file_contents.replace('\n', '').replace(',', '')
