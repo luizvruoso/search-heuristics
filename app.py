@@ -33,11 +33,15 @@ def main():
     search = BlindSearch()
     t1 = threading.Thread(target=search.blindSearch, args=[matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier] )
 
+    # search = BlindSearch()
+    # t1 = threading.Thread(target=search.blindSearch, args=[openScreen.startPosition, openScreen.finishPosition, openScreen.sketchMatrix, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier] )
+
+    search = ManhattanDistance()
+    t1 = threading.Thread(target=search.manhattanDistance,
+                          args=[openScreen.startPosition, openScreen.finishPosition, openScreen.sketchMatrix,
+                                arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier])
+
     t1.start()
-
-
-    #search.blindSearch(openScreen.startPosition, openScreen.finishPosition, openScreen.sketchMatrix, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier)
-       
 
 def mainScreen(matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
     mapScreen = Map()

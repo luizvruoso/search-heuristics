@@ -21,15 +21,16 @@ class BlindSearch():
             return 1
         elif(value == 2):
             return 5
-        elif(value == 3):
+        elif value == 3:
             return 10
-        elif(value == 4):
+        elif value == 4:
             return 15
 
         return 0
     
     def setMatrix(self, value):
         self.grid = value
+
     def getMatrix(self):
         return self.grid
 
