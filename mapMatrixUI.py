@@ -1,7 +1,8 @@
 import pygame
-
-
-ACTUAL_POSITION = -1
+from search.matrix import Matrix
+from search.search import Search
+import copy
+ACTUAL_POSITION = 999999
 TARGET_POSITION = -9999
 
 class Map:
@@ -16,19 +17,24 @@ class Map:
         self.DARK_GREY = (56, 56, 56)
         self.PINK = (255, 112, 252)
 
-    def screen(self, objectSource, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier): 
+    def screen(self, matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
         
 
-        initialPosition = objectSource.startPosition
-        finishPosition =  objectSource.finishPosition
+        initialPosition = searchParams.getInitialPosition()
+        finishPosition =  searchParams.getTargetPosition()
 
         #arrayColor.append(initialPosition) 
         arrayColorFinalResult.append(initialPosition.getActualPosition())
 
         #objectSource.sketchMatrix[initialPosition[0]][initialPosition[1]] = ACTUAL_POSITION
-        objectSource.sketchMatrix[finishPosition.getX()][finishPosition.getY()] = TARGET_POSITION
-        
-        grid = objectSource.sketchMatrix
+
+        #OPCAO PARA HEURISTICA DE RALO
+        matrix.sketchMatrix[finishPosition.getX()][finishPosition.getY()] = TARGET_POSITION
+
+
+        #matrix.sketchMatrix = []
+        grid = copy.deepcopy(matrix.sketchMatrix)
+        #grid[finishPosition.getX()][finishPosition.getY()] = TARGET_POSITION
         pygame.init()
         # This sets the WIDTH and HEIGHT of each grid location
         WIDTH = 11
@@ -52,9 +58,9 @@ class Map:
                 if event.type == pygame.QUIT:  # If user clicked close
                     done = True  # Flag that we are done so we exit this loop
 
-            for row in range(42):
+            for row in range(matrix.getSizeX()):
                 #print(grid[row])
-                for column in range(42):
+                for column in range(matrix.getSizeY()):
                     #if grid[row][column] == ACTUAL_POSITION:
                     #    color = self.WHITE 
                     if grid[row][column] == TARGET_POSITION:

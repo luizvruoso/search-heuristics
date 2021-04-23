@@ -2,7 +2,9 @@ from search.item import ItemSearch
 from mapMatrixUI import Map
 import time, threading
 import json
-
+import datetime
+from search.matrix import Matrix
+from search.search import Search
 
 #BUSCA CEGA COM CUSTO UNIFORME
 class BlindSearch():
@@ -16,14 +18,13 @@ class BlindSearch():
 
     def getCostByValue(self, value):
         if(value == 1):
-            return 2
+            return 1
         elif(value == 2):
             return 5
         elif(value == 3):
             return 10
         elif(value == 4):
             return 15
-        
 
         return 0
     
@@ -44,148 +45,90 @@ class BlindSearch():
 
 
 
-    def blindSearch(self, initialPosition, targetPosition, grid, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
-        #print(grid)
+    def blindSearch(self, matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
         LIST_FRONTIER = []
         LIST_FRONTIER.append([])
-        #PRIMEIRA PASSO
-        self.setMatrix(grid)
-        LIST_FRONTIER[0].append(self.makeItem(initialPosition, 0, []))
-
-        actual = LIST_FRONTIER[0]
         ALREADY_VISITED = []
         ALREADY_VISITED.append([])
-        COLOR = []
-        
+
+
+
+        self.setMatrix(matrix.getSketchMatrix())
+
+        LIST_FRONTIER[0].append(self.makeItem(searchParams.getInitialPosition(), 0, []))
+        # para interações
         i = 0
         finalResult = []
-        flag = True
-        #f = open("saida.txt", 'w')
-        #f.truncate(0)
-        auxTotalCostFounded = 0
+
+        dataIni = datetime.datetime.now()
+
         while(len(LIST_FRONTIER) != 0):
-            #print(len(LIST_FRONTIER))
             actual = LIST_FRONTIER.pop(0)
             i += 1
 
-            while(len(LIST_FRONTIER) != 0):
-                if(ALREADY_VISITED.count(actual[0].actualPosition) <= 1 ):
+            while(len(LIST_FRONTIER) != 0 ):
+                if(ALREADY_VISITED.count(actual[0].actualPosition) <= 0 ):
                     ALREADY_VISITED.append(actual[0].actualPosition)
                     break
                 else:
-                    #f.write("Popado"+ str(actual[0].actualPosition) + "\n")
                     i += 1
                     actual = LIST_FRONTIER.pop(0)
 
-            #for item in LIST_FRONTIER:
-                #ctrl = -1
-                #try: 
-                   # ctrl = ALREADY_VISITED.index(item[0])
-                #except:
-                    #ctrl = -1
-                #if(ctrl == -1):
-                    #print("LIST_FRONTIER | Posicao", item[0].actualPosition, "Custo", item[0].cost, "Total", item[0].totalCost)
 
-            #ALREADY_VISITED.append(actual)
             arrayColorActualPosition.append(actual[0].getActualPosition())
             
 
-            if(actual[0].compareBtwnSelfAndItem(targetPosition)):
+            if(actual[0].compareBtwnSelfAndItem(searchParams.getTargetPosition())):
                 finalResult.append(actual)
-                flag = False
-
-            #if(actual[0].actualPosition[0] == targetPosition[0] and actual[0].actualPosition[1] == targetPosition[1]):
-            #    finalResult.append(actual)
-            #    flag = False
 
 
-            if(len(finalResult) >= 1 and not flag):
-                print("achou um final")
-                print("POSICAO Atual", actual[0].actualPosition)
-                print("HISTORICO", actual[0].historyCalls)
-                print("Numero de pops", i)
+
+            if(len(finalResult) >= 1):
+                print("UM CAMINHO FOI ENCONTRADO!")
+                print("POSICAO ATUAL: ", actual[0].actualPosition)
+                actual[0].historyCalls.pop(0)
+                actual[0].historyCalls.append(actual[0].actualPosition)
+                print("HISTORICO DE CHAMADAS: ", actual[0].historyCalls)
+                print("NUMERO DE ITENS ANALISADOS (N DE POPS): ", i)
+                #valorPosicacaoFinal = self.getCostByValue(self.getValueWithMatchFromMatrix(actual[0].actualPosition[0], actual[0].actualPosition[1] ))
+                #valorPosicaoInicial = self.getCostByValue(self.getValueWithMatchFromMatrix(initialPosition.getX(), initialPosition.getY() ))
+                #print("valor da posicao final", valorPosicacaoFinal)
+                #print("TOTAL COST", actual[0].totalCost + valorPosicacaoFinal - valorPosicaoInicial)
+                soma = 0
                 for item in finalResult:
-                    print("Resultado ")
-                    print(item[0].historyCalls)
-                    print("hoi", item[0].totalCost)
-                    auxTotalCostFounded = item[0].totalCost
-                    time.sleep(3)
+                    time.sleep(1)
                     arrayColorFrontier.clear()
                     arrayColorActualPosition.clear()
                     arrayColorFinalResult.clear()
-                    #print('asdadasdasdasdas', item[0].historyCalls)
                     for item in item[0].historyCalls:
+                        soma += self.getCostByValue(self.getValueWithMatchFromMatrix(item[0], item[1]))
                         arrayColorFinalResult.append(item)
+                    print("Total2", soma)
                 finalResult.clear()
                 break
 
 
-            aux = actual[0].getHistoryCall() + [actual[0].getActualPosition()]
-            for items in actual[0].getChildren():    
-                LIST_FRONTIER.append([self.makeItem(items, actual[0].getTotalCost(), aux)])
+            auxHistoricoChamadas = actual[0].getHistoryCall() + [actual[0].getActualPosition()]
+            for item in actual[0].getChildren():    
+                LIST_FRONTIER.append([self.makeItem(item, actual[0].getTotalCost(), auxHistoricoChamadas)])
+
             
+            LIST_FRONTIER.sort(key=self.sortItems)
 
-          
-            
-            LIST_FRONTIER.sort(key=self.sortItems) #ISSO É ALTO NIVEL - DEMOROU 3 HORAS
-            #LIST_FRONTIER.sort(key=self.sortItemsTotal, reverse=True) #ISSO É AUTO NIVEL - DEMOROU 3 HORAS
-            #aux = "LOOP "+str(i)+"=============== Posicao Atual"+str(actual[0].actualPosition)
-
-            #print("LOOP ", i, "=============== Posicao Atual", actual[0].actualPosition)
-            #f.write(str(aux)+"\n")
-
-            #print("item list")
-
+            #array para print
             arrayColorFrontier.clear()
             for item in LIST_FRONTIER:
                 arrayColorFrontier.append(item[0].getActualPosition())
-                #aux = "item Cost"+str(item[0].cost)+"position"+str(item[0].actualPosition)
-                #f.write(str(aux)+"\n")
-
-           # t1 = threading.Thread(target=self.printMatrixColorFrontier,
-            #                      args=[LIST_FRONTIER, arrayColorFrontier])
-            #t1.start()
-
-
-            #print("item", item[0].cost, "value", item[0].actualPosition)
-        
-        #f.close()
-        
-
-
-    def printMatrixColorFrontier(self, LIST_FRONTIER, arrayColorFrontier):
-        arrayColorFrontier.clear()
-        for item in LIST_FRONTIER:
-            arrayColorFrontier.append(item[0].getActualPosition())
-        return
 
 
 
-    def isAdjacent(self, position, targetPosition):
-        ACTUAL_POSITION_X = position[0]
-        ACTUAL_POSITION_Y = position[1]
 
-        TARGET_POSITION_X = targetPosition[0].actualPosition[0]
-        TARGET_POSITION_Y = targetPosition[0].actualPosition[1]
+        print("Data ini ", dataIni)
+        print("DAta fim",datetime.datetime.now())
+        print("Tempo total passado",datetime.datetime.now() - dataIni)
 
-        #PODE IR A DIREITA
-        if( (ACTUAL_POSITION_X + 1) <= 41 and ACTUAL_POSITION_Y == TARGET_POSITION_Y):
-            return True
 
-        #PODE IR A BAIXO
-        if( ACTUAL_POSITION_X ==  TARGET_POSITION_X and ACTUAL_POSITION_Y + 1 <= 41):
-            return True
-        #PODE IR A ESQUERDA
-        if( (ACTUAL_POSITION_X - 1) >= 0 and ACTUAL_POSITION_Y == TARGET_POSITION_Y):
-            return True       
-            
-        #PODE IR A ACIMA
-        if( ACTUAL_POSITION_X ==  TARGET_POSITION_X and ACTUAL_POSITION_Y - 1 >= 0):
-            return True
 
-        
-
-        return False
 
 
     def makeItem(self, actualPosition, costToAdd, whoCalled):
@@ -195,52 +138,50 @@ class BlindSearch():
         TOTAL_COST_POSITION = self.getCostByValue(VALUE_POSITION) + costToAdd
         COST_POSITION = self.getCostByValue(VALUE_POSITION) + costToAdd
 
-        # print(TOTAL_COST_POSITION)
+
         childrenArray = []
   
-        item = ItemSearch(actualPosition.getActualPosition(), COST_POSITION, TOTAL_COST_POSITION, None, whoCalled)
-        
-        i = 0
+        item = ItemSearch(actualPosition.getActualPosition(), COST_POSITION, TOTAL_COST_POSITION, [], whoCalled)
+
 
         # verifica numero direita
         if (ACTUAL_POSITION_Y + 1 <= 41):
-            #childrenArray.append([])
-            childrenArray.append(ItemSearch([ACTUAL_POSITION_X, ACTUAL_POSITION_Y + 1], 0, 0, None, None))
-            #childrenArray[i].append(ACTUAL_POSITION_Y + 1)
-            i += 1
+            childrenArray.append(ItemSearch([ACTUAL_POSITION_X, ACTUAL_POSITION_Y + 1], 
+            self.getValueWithMatchFromMatrix(ACTUAL_POSITION_X, ACTUAL_POSITION_Y + 1),
+            0,
+            [],
+            []))
+
         #verifica numero a abaixo
         if(ACTUAL_POSITION_X + 1 <= 41):
-            #childrenArray.append([])
-            #childrenArray[i].append(ACTUAL_POSITION_X + 1)
-            #childrenArray[i].append(ACTUAL_POSITION_Y)
-            childrenArray.append(ItemSearch([ACTUAL_POSITION_X+1, ACTUAL_POSITION_Y], 0, 0, None, None))
+            childrenArray.append(ItemSearch([ACTUAL_POSITION_X + 1, ACTUAL_POSITION_Y],
+            self.getValueWithMatchFromMatrix(ACTUAL_POSITION_X + 1, ACTUAL_POSITION_Y),
+            0,
+            [],
+            []))
 
-            #print(item.historyCalls.count(childrenArray[i]))
-            i+=1
+
 
         #verifica numero a cima
         if( (ACTUAL_POSITION_X - 1) >= 0 ):
-            #childrenArray.append([])
-            childrenArray.append(ItemSearch([ACTUAL_POSITION_X - 1 , ACTUAL_POSITION_Y], 0, 0, None, None))
+            childrenArray.append(ItemSearch([ACTUAL_POSITION_X - 1, ACTUAL_POSITION_Y],
+            self.getValueWithMatchFromMatrix(ACTUAL_POSITION_X - 1, ACTUAL_POSITION_Y),
+            0,
+            [],
+            []))
 
-            #childrenArray[i].append(ACTUAL_POSITION_X - 1)
-            #childrenArray[i].append(ACTUAL_POSITION_Y)
-            i+=1
 
         #verifica numero esquerda
         if(ACTUAL_POSITION_Y - 1 >= 0):
             #childrenArray.append([])
             #childrenArray[i].append(ACTUAL_POSITION_X)
             #childrenArray[i].append(ACTUAL_POSITION_Y - 1)
-            childrenArray.append(ItemSearch([ACTUAL_POSITION_X, ACTUAL_POSITION_Y - 1], 0, 0, None, None))
+            childrenArray.append(ItemSearch([ACTUAL_POSITION_X , ACTUAL_POSITION_Y - 1], 
+            self.getValueWithMatchFromMatrix(ACTUAL_POSITION_X, ACTUAL_POSITION_Y - 1),
+            0,
+            [],
+            []))
 
-            i+=1
-            
-
-        # aux = []
-        # for j in range(len(childrenArray)):
-        #      if(item.historyCalls.count(childrenArray[j]) == 0):
-        #         aux.append(childrenArray[j])
 
 
 
@@ -248,7 +189,7 @@ class BlindSearch():
 
         return item
         
-        
-
+    
+   
 
 

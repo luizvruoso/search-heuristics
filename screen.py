@@ -2,7 +2,7 @@ from tkinter import Tk
 from tkinter.filedialog import askopenfilename
 from tkinter import Label
 from tkinter import ttk
-from openConfigs import openConfigs
+#from openConfigs import openConfigs
 
 # 1 --> Verde           (Custo: 1)
 # 2 --> Marrom          (Custo: 5)

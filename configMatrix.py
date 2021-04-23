@@ -6,9 +6,9 @@ from utils.arrayTreatment import arrayContentToInt
 from search.blindSearch.blindSearch import BlindSearch
 from mapMatrixUI import Map
 from search.item import ItemSearch
-
+import copy
 import threading
-
+from search.matrix import Matrix
 # 1 --> Verde           (Custo: 1)
 # 2 --> Marrom          (Custo: 5)
 # 3 --> Azul            (Custo: 10)
@@ -21,12 +21,18 @@ class OpenScreen:
                 self.squareMatrixSize = 42 #const
                 self.startPosition = []
                 self.finishPosition = []
+                self.matrixObject = None
+                self.searchParams = None
         
 
         def openConfigs(self):
                 #filename = askopenfilename(title = "Select file", filetypes = (("Text Files","*.txt"),))
                 #print("FILENAME", filename)
                 f = open("index.txt", 'r')
+
+                #matrix = Matrix()
+                self.matrixObject.readConfigsMatrixFromJSON()
+                #matrix.readConfigsMatrixFromJSON()
 
                 auxReadLine = f.readline()
                 auxPosition = arrayContentToInt(auxReadLine.strip().split(","))
@@ -39,12 +45,20 @@ class OpenScreen:
 
                 file_contents = f.read() 
                 file_contents = file_contents.replace('\n', '').replace(',', '')
-               
+                #print(file_contents)
+                #ACEITA APENAS MATRIZES QUADRADAS
+
                 for i in range(self.squareMatrixSize):
                         self.sketchMatrix.append([])
 
                         for j in range(self.squareMatrixSize):
                                 self.sketchMatrix[i].append(int(file_contents[ ( i * 42 ) + j ]))
+
+                self.matrixObject.setSketchMatrix(copy.deepcopy(self.sketchMatrix))
+                self.matrixObject.setMatrix(self.sketchMatrix)
+
+                self.searchParams.setInitialPosition(self.startPosition)
+                self.searchParams.setTargetPosition(self.finishPosition)
 
                 labelGroup = ttk.Label(screen, text = "Selecionado", width = "40", font = ("Calibri", 11))
                 labelGroup.place(x = 20, y = 200)
@@ -52,8 +66,9 @@ class OpenScreen:
 
                 self.quit()
 
-        def screen(self):
-               
+        def screen(self, matrix, searchParams):
+                self.matrixObject = matrix
+                self.searchParams = searchParams
                 global screen
                 screen = Tk()
                 screen.eval('tk::PlaceWindow . center') 
@@ -66,7 +81,7 @@ class OpenScreen:
                 openButton = ttk.Button(screen, text = "Import File", width = "15", command = self.openConfigs)
                 openButton.place(x = 130, y = 70)
 
-               # blindSearchButton = ttk.Button(screen, text = "Blind Search", width = "15", command = self.blindSearchCall )
+                #blindSearchButton = ttk.Button(screen, text = "Blind Search", width = "15", command = self.blindSearchCall )
                 #blindSearchButton.place(x = 130, y = 140)
 
                 labelGroup = ttk.Label(screen, text = "Luiz Vinicius Ruoso   RA: 18233486", width = "40", font = ("Calibri", 11))
@@ -77,35 +92,10 @@ class OpenScreen:
 
                 screen.mainloop()
 
-        def blindSearchCall(self):
-                screen.quit()
-                arrayColorFinalResult = []
-                arrayColorFrontier = []
-                arrayColorActualPosition = []
 
-                print('hoooi')
-
-                openScreen = OpenScreen(self.sketchMatrix, self.squareMatrixSize, self.startPosition, self.finishPosition)
-
-
-                search = BlindSearch()
-                t = threading.Thread(target=self.mainScreen, args=[openScreen , arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier] )
-                t1 = threading.Thread(target=search.blindSearch,
-                                      args=[self.startPosition, self.finishPosition,
-                                            self.sketchMatrix, arrayColorActualPosition, arrayColorFinalResult,
-                                            arrayColorFrontier])
-                t.start()
-
-                t1.start()
-                #t1.join()
-                return
 
 
         def quit(self):
             global screen
             screen.quit()
 
-        def mainScreen(openScreen, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
-                mapScreen = Map()
-                mapScreen.screen(openScreen, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier)
-                return
