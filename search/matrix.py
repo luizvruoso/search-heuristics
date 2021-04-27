@@ -1,5 +1,18 @@
 import json
-import copy
+
+
+def getCostByValue(value):
+    if value == 1:
+        return 2
+    elif value == 2:
+        return 5
+    elif value == 3:
+        return 10
+    elif value == 4:
+        return 15
+    return 0
+
+
 class Matrix:
 
     def __init__(self, matrix, sketchMatrix, sizeX, sizeY):
@@ -35,17 +48,6 @@ class Matrix:
     def getSizeY(self):
         return self.sizeY
 
-    def getCostByValue(self, value):
-        if (value == 1):
-            return 2
-        elif (value == 2):
-            return 5
-        elif (value == 3):
-            return 10
-        elif (value == 4):
-            return 15
-        return 0
-
     def getValueWithMatchFromMatrix(self, X, Y):
         return self.matrix[X][Y]
 
@@ -54,3 +56,7 @@ class Matrix:
             data = json.load(json_file)
             self.sizeX = data['matrix']['matrix-max-column']
             self.sizeY = data['matrix']['matrix-max-row']
+
+    def readConfigsColorsFromJSON(self):
+        with open('properties/configs.json') as json_file:
+            data = json.load(json_file)

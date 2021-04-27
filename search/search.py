@@ -1,21 +1,47 @@
-
 class Search:
 
-    def __init__(self, initialPosition, targetPosition):
+    def __init__(self, initialPosition, nextPosition, targetPosition, numberOfPops, totalCost, totalTime):
         self.initialPosition = initialPosition
+        self.nextPosition = nextPosition
         self.targetPosition = targetPosition
+        self.numberOfPops = numberOfPops
+        self.totalCost = totalCost
+        self.totalTime = totalTime
 
-    def __init__(self):
-        return
+    def setTotalTime(self, value):
+        self.totalTime = value
+
+    def getTotalTime(self):
+        return self.totalTime
+
+    def setTotalCost(self, value):
+        self.totalCost = value
+
+    def getTotalCost(self):
+        return self.totalCost
+
+    def setNumberOfPops(self, value):
+        self.numberOfPops = value
+
+    def getNumberOfPops(self):
+        return self.numberOfPops
 
     def setInitialPosition(self, value):
         self.initialPosition = value
 
     def getInitialPosition(self):
-        return  self.initialPosition
+        return self.initialPosition
 
     def setTargetPosition(self, value):
         self.targetPosition = value
 
     def getTargetPosition(self):
         return self.targetPosition
+
+    def setNextPosition(self, value):
+        self.nextPosition = value
+
+    def getNextPosition(self):
+        return self.nextPosition
+
+
