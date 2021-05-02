@@ -13,7 +13,7 @@ def main():
     arrayColorFrontier = []
     arrayColorActualPosition = []
     matrix = Matrix()
-    searchParams = Search([], [], [], 0, 0, 0)
+    searchParams = Search([], [], [], 0, 0, 0, None)
 
     t0 = threading.Thread(target=openScreenAux, args=[matrix, searchParams])
     t0.start()
@@ -24,17 +24,21 @@ def main():
 
     t.start()
 
-    search = BlindSearch()
-    t1 = threading.Thread(target=search.blindSearch,
-                          args=[matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult,
-                                arrayColorFrontier])
-    t1.start()
+    print("maaaaaoizinho?", searchParams.getSearchMethod())
 
-    # search = ManhattanDistance()
-    # t1 = threading.Thread(target=search.manhattanDistance,
-    #                       args=[matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult,
-    #                             arrayColorFrontier])
-    # t1.start()
+    if searchParams.getSearchMethod() == 'blind':
+        search = BlindSearch()
+        t1 = threading.Thread(target=search.blindSearch,
+                              args=[matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult,
+                                    arrayColorFrontier])
+        t1.start()
+    else:
+
+        search = ManhattanDistance()
+        t1 = threading.Thread(target=search.manhattanDistance,
+                               args=[matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult,
+                                     arrayColorFrontier])
+        t1.start()
 
 
 def mainScreen(matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):

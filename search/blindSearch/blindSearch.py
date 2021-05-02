@@ -3,6 +3,7 @@ from search.item import ItemSearch
 from search.search import Search
 import time
 import datetime
+from datetime import timedelta
 
 
 # BUSCA CEGA COM CUSTO UNIFORME
@@ -107,7 +108,8 @@ class BlindSearch:
         print("CUSTO: ", soma)
         print("Data ini ", dataIni)
         print("DAta fim", datetime.datetime.now())
-        totalTime = (datetime.datetime.now() - dataIni) * 1000
+        totalTime = ((datetime.datetime.now() - timedelta(seconds=5) ) - dataIni)
+
         print("Tempo total passado", totalTime)
 
         searchParams.setTotalTime(totalTime)

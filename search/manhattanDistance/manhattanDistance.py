@@ -4,6 +4,7 @@ from search.item import ItemSearch
 import time
 import datetime
 from mapMatrixUI import Map
+from datetime import timedelta
 
 
 # Usando a heurística Distância Manhattan
@@ -92,10 +93,11 @@ class ManhattanDistance:
                 actual[0].historyCalls.append(actual[0].actualPosition)
                 print("HISTORICO DE CHAMADAS: ", actual[0].historyCalls)
                 print("NUMERO DE ITENS ANALISADOS (N DE POPS): ", i)
-                globals.numberOfPops = i
+                #globals.numberOfPops = i
+                searchParams.setNumberOfPops(i)
                 soma = 0
                 for item in finalResult:
-                    time.sleep(1)
+                    time.sleep(5)
                     arrayColorFrontier.clear()
                     arrayColorActualPosition.clear()
                     arrayColorFinalResult.clear()
@@ -103,6 +105,7 @@ class ManhattanDistance:
                         soma += getCostByValue(self.getValueWithMatchFromMatrix(item[0], item[1]))
                         arrayColorFinalResult.append(item)
 
+                    searchParams.setTotalCost(soma)
                     print("Total2", soma)
 
                 finalResult.clear()
@@ -122,7 +125,11 @@ class ManhattanDistance:
 
         print("Data Inicio: ", dataIni)
         print("Data Fim: ", datetime.datetime.now())
-        print("Tempo total passado: ", datetime.datetime.now() - dataIni)
+        timeFinal = ((datetime.datetime.now() - timedelta(seconds=5)) - dataIni)
+        print("Tempo total passado: ",timeFinal)
+        searchParams.setTotalTime(timeFinal)
+
+
 
     def makeItem(self, nextPosition, costToAdd, whoCalled, targetPosition):
 

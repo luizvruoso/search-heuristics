@@ -9,7 +9,7 @@ TARGET_POSITION = -9999
 
 class Map:
     def __init__(self):
-        self.WINDOW_SIZE = [505, 530]
+        self.WINDOW_SIZE = [505, 550]
         self.GREEN = (151, 224, 103)
         self.BLUE = (84, 194, 234)
         self.RED = (201, 94, 82)
@@ -27,9 +27,10 @@ class Map:
         arrayColorFinalResult.append(initialPosition.getActualPosition())
 
         # OPCAO PARA HEURISTICA DE RALO
-        # matrix.sketchMatrix[finishPosition.getX()][finishPosition.getY()] = TARGET_POSITION
+        #matrix.sketchMatrix[finishPosition.getX()][finishPosition.getY()] = TARGET_POSITION
 
         grid = copy.deepcopy(matrix.sketchMatrix)
+        grid[initialPosition.actualPosition[0]][initialPosition.actualPosition[1]] = TARGET_POSITION
         pygame.init()
 
         WIDTH = 11
@@ -38,26 +39,32 @@ class Map:
         MARGIN = 1
 
         screen = pygame.display.set_mode(self.WINDOW_SIZE)
+        screen.fill(self.DARK_GREY)
         pygame.display.set_caption("D.A.T.A")
         done = False
 
         pygame.font.init()
-        font = pygame.font.SysFont('Arial MT Light', 23)
+        font = pygame.font.SysFont('Arial MT Light', 18)
 
         x = font.render("Número de pops: ", True, self.WHITE)
         y = font.render("Custo total: ", True, self.WHITE)
         z = font.render("Tempo total: ", True, self.WHITE)
 
-        screen.blit(x, (5, 510))
-        screen.blit(y, (200, 510))
-        screen.blit(z, (350, 510))
+        screen.blit(x, (20, 520))
+        screen.blit(y, (180, 520))
+        screen.blit(z, (310, 520))
 
         clock = pygame.time.Clock()
 
         while not done:
+            pygame.draw.rect(screen, self.DARK_GREY, [125, 520, 50, 20], 0)
+            pygame.draw.rect(screen, self.DARK_GREY, [255, 520, 50, 20], 0)
+            pygame.draw.rect(screen, self.DARK_GREY, [390, 520, 100, 20], 0)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     done = True
+
 
             for row in range(matrix.getSizeX()):
                 for column in range(matrix.getSizeY()):
@@ -102,19 +109,26 @@ class Map:
                                   WIDTH,
                                   HEIGHT])
 
-            font = pygame.font.SysFont("Comic Sans MS", 15)
+            font = pygame.font.SysFont("Arial MT Light", 20)
 
             x1 = font.render(str(searchParams.getNumberOfPops()), True, self.WHITE)
             x2 = font.render(str(searchParams.getTotalCost()), True, self.WHITE)
             x3 = font.render(str(searchParams.getTotalTime()), True, self.WHITE)
-            print(searchParams.getNumberOfPops())
-            print(searchParams.getTotalCost())
-            screen.blit(x1, (140, 510))
-            screen.blit(x2, (300, 510))
-            screen.blit(x3, (450, 510))
+            #print(searchParams.getNumberOfPops())
+            #print(searchParams.getTotalCost())
+            screen.blit(x1, (125, 520))
+            screen.blit(x2, (255, 520))
+            screen.blit(x3, (390, 520))
+
+
+
             pygame.display.update()
 
-            clock.tick(10)
+
+            clock.tick(15)
             pygame.display.flip()
+
+
+
 
         pygame.quit()

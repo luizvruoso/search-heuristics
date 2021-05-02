@@ -25,7 +25,7 @@ class OpenScreen:
 
         filename = askopenfilename(title="Select file", filetypes=(("Text Files", "*.txt"),))
         f = open("index.txt", 'r')
-
+        self.searchParams.setSearchMethod(button)
         self.matrixObject.readConfigsMatrixFromJSON()
 
         auxReadLine = f.readline()
@@ -62,7 +62,7 @@ class OpenScreen:
 
         screen = Tk()
         screen.eval('tk::PlaceWindow . center')
-        screen.geometry("350x400")
+        screen.geometry("400x400")
         screen.title("DATA")
         screen.resizable(False, False)
         Label(text="D.A.T.A", bg="grey", width="150", height="2", font=("Calibri", 15)).pack()
@@ -70,11 +70,11 @@ class OpenScreen:
 
         blindSearchButton = ttk.Button(screen, text="Blind Search", width="20",
                                        command=lambda: self.openConfigs("blind"))
-        blindSearchButton.place(x=130, y=70)
+        blindSearchButton.place(x=135, y=70)
 
         manhattanButton = ttk.Button(screen, text="Manhattan Distance", width="20",
                                      command=lambda: self.openConfigs("manhattan"))
-        manhattanButton.place(x=130, y=100)
+        manhattanButton.place(x=135, y=100)
 
         labelGroup = ttk.Label(screen, text="Luiz Vinicius Ruoso   RA: 18233486", width="40", font=("Calibri", 11))
         labelGroup.place(x=20, y=350)
