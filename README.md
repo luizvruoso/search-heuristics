@@ -15,6 +15,16 @@ Baseada na implementação padrão, onde é selecionado um nó que posteriorment
 
 Baseando-se no método de custo uniforme, a fronteira dita acima é sempre ordenada pelo menor custo, o que proporciona que quando o nó de origem apareça na fornteira, esse seja já o melhor caminho
 
+#### Heurística de Ralo
+
+Outra implementação para melhoria do algoritimo, é utilizado uma poda que denominamos poda de "Ralo". A mesma consiste em sinalizar ao algoritmo de ordenação da fronteira que o resultado alvo já está lá. Isso é feito, ajustando o custo desse ponto como o menor possível, nessa implementação esse custo vai para -9999. Sendo assim, quando o resultado alvo entra na fronteira, a ordenação já o coloca como o próximo a ser retirado da lista. 
+
+    Usando em comparação a execução abaixo temos um ganho de aproximadamente 10 ms e menos 114 acessos a posições.
+
+    - Para ativar acesse o arquivo: ./mapMatrixUI.py e descomente a linha 40
+
+
+
 <p align="center">
     <img src="./img-docs/img4.png"> <br>Exemplo de Fronteira
 </p>
