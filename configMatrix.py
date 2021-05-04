@@ -26,7 +26,7 @@ class OpenScreen:
     def openConfigs(self, button):
 
         filename = askopenfilename(title="Select file", filetypes=(("Text Files", "*.txt"),))
-        f = open("index.txt", 'r')
+        f = open(filename, 'r')
         self.searchParams.setSearchMethod(button)
         self.matrixObject.readConfigsMatrixFromJSON()
         self.matrixObject.makeDbValues()
