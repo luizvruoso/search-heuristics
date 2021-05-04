@@ -94,7 +94,7 @@ Para o exemplo acima, temos a seguinte configuração:
 Sendo o ponto marcado como preto a origem (0,0) e (41,41) o destino.
 - No rodapé temos os resultados obtidos na busca.
 
-- Como exemplo de *Fronteira/Borda* da busca temos a seguinte exeibição
+- Como exemplo de *Fronteira/Borda* da busca temos a seguinte exibição
 
 <p align="center">
     <img src="./img-docs/img2.png">
