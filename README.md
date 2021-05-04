@@ -49,6 +49,8 @@ Depois, soma-se os dois deltas e têm-se o Manhattan:
 
 Vale lembrar que a heurística de Manhattan é somada ao custo do próximo nó na fronteira, tornando-os uma **busca com informação A***.
 
+Nota-se que usando a heurística de Distância Manhattan, há uma busca mais direcionada, onde as fronteiras de busca são mais concisas, resultando em um tempo menor de busca.
+
 <p align="center">
     <img src="./img-docs/img5.png"> <br>Exemplo de Fronteira
 </p>
