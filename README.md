@@ -47,7 +47,7 @@ Utiliza da implementação e lógica do BFS, entrentanto o cálculo de custo de 
     dx = abs(posiçãoDoPróximoEmX - posiçãoFinalX)
     dy = abs(posiçãoDoPróximoEmY - posiçãoFinalY)
 
-Onde **dx** é a diferença absoluta (exclui-se os sinais) entre a **posição final** no eixo X **menos** a **posição do próximo nó** no eixo X e **dy** é a diferença absoluta entre a **posição final** no eixo Y **menos** a **posição do próximo nó** no eixo Y e **dy** e **dy**.
+Onde **dx** é a diferença absoluta (exclui-se os sinais) entre a **posição final** no eixo X **menos** a **posição do próximo nó** no eixo X e **dy** é a diferença absoluta entre a **posição final** no eixo Y **menos** a **posição do próximo nó** no eixo Y.
 
 Depois, soma-se os dois deltas e têm-se o Manhattan:
 
