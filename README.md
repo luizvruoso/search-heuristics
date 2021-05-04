@@ -1,5 +1,5 @@
 
-## SEARCH HEURISTICS - Introdução a IA
+## SEARCH HEURISTICS - Introdução à IA
 
 Nessa implementação, são propostas duas formas de encontrar um melhor caminho (com menor custo) baseada em uma matriz
 pré determinada. São elas: 
