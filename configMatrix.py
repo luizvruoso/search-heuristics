@@ -27,6 +27,7 @@ class OpenScreen:
         f = open("index.txt", 'r')
         self.searchParams.setSearchMethod(button)
         self.matrixObject.readConfigsMatrixFromJSON()
+        self.matrixObject.makeDbValues()
 
         auxReadLine = f.readline()
         auxPosition = arrayContentToInt(auxReadLine.strip().split(","))
@@ -41,11 +42,13 @@ class OpenScreen:
         file_contents = file_contents.replace('\n', '').replace(',', '')
         # ACEITA APENAS MATRIZES QUADRADAS
 
-        for i in range(self.squareMatrixSize):
+
+
+        for i in range(self.matrixObject.getSizeY()):
             self.sketchMatrix.append([])
 
-            for j in range(self.squareMatrixSize):
-                self.sketchMatrix[i].append(int(file_contents[(i * 42) + j]))
+            for j in range(self.matrixObject.getSizeX()):
+                self.sketchMatrix[i].append(int(file_contents[(i * self.matrixObject.getSizeX()) + j]))
 
         self.matrixObject.setSketchMatrix(copy.deepcopy(self.sketchMatrix))
         self.matrixObject.setMatrix(self.sketchMatrix)

@@ -1,16 +1,7 @@
 import json
 
 
-def getCostByValue(value):
-    if value == 1:
-        return 2
-    elif value == 2:
-        return 5
-    elif value == 3:
-        return 10
-    elif value == 4:
-        return 15
-    return 0
+
 
 
 class Matrix:
@@ -20,6 +11,11 @@ class Matrix:
         self.sketchMatrix = sketchMatrix
         self.sizeX = sizeX
         self.sizeY = sizeY
+
+        self.op1 = None
+        self.op2 = None
+        self.op3 = None
+        self.op4 = None
 
     def __init__(self):
         return
@@ -57,6 +53,22 @@ class Matrix:
             self.sizeX = data['matrix']['matrix-max-column']
             self.sizeY = data['matrix']['matrix-max-row']
 
-    def readConfigsColorsFromJSON(self):
+    def makeDbValues(self):
         with open('properties/configs.json') as json_file:
             data = json.load(json_file)
+            self.op1 = data['colors']['color-weight']['1']
+            self.op2 = data['colors']['color-weight']['2']
+            self.op3 = data['colors']['color-weight']['3']
+            self.op4 = data['colors']['color-weight']['4']
+
+    def getCostByValue(self, value):
+        if value == 1:
+            return self.op1
+        elif value == 2:
+            return self.op2
+        elif value == 3:
+            return self.op3
+        elif value == 4:
+            return self.op4
+        return 0
+

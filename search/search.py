@@ -16,7 +16,6 @@ class Search:
     def getSearchMethod(self):
         return self.searchMethod
 
-
     def setTotalTime(self, value):
         self.totalTime = value
 

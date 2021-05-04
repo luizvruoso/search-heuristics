@@ -1,4 +1,5 @@
 import time
+import json
 
 import pygame
 import copy
@@ -18,8 +19,17 @@ class Map:
         self.BLACK = (0, 0, 0)
         self.DARK_GREY = (56, 56, 56)
         self.PINK = (255, 112, 252)
+        self.WIDTH = 11
+        self.HEIGHT = 11
+        self.MARGIN = 1
 
     def screen(self, matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
+        with open('./properties/configs.json') as json_file:
+            data = json.load(json_file)
+            self.WINDOW_SIZE = data['general']['pygame']['WINDOW_SIZE']
+            self.WIDTH = data['general']['pygame']['WIDTH']
+            self.HEIGHT = data['general']['pygame']['HEIGHT']
+            self.MARGIN = data['general']['pygame']['MARGIN']
 
         initialPosition = searchParams.getInitialPosition()
         finishPosition = searchParams.getTargetPosition()
@@ -33,10 +43,12 @@ class Map:
         grid[initialPosition.actualPosition[0]][initialPosition.actualPosition[1]] = TARGET_POSITION
         pygame.init()
 
-        WIDTH = 11
-        HEIGHT = 11
+        #WIDTH = 11
+        #HEIGHT = 11
 
-        MARGIN = 1
+        #MARGIN = 1
+
+
 
         screen = pygame.display.set_mode(self.WINDOW_SIZE)
         screen.fill(self.DARK_GREY)
@@ -66,8 +78,8 @@ class Map:
                     done = True
 
 
-            for row in range(matrix.getSizeX()):
-                for column in range(matrix.getSizeY()):
+            for row in range(matrix.getSizeY()):
+                for column in range(matrix.getSizeX()):
                     if grid[row][column] == TARGET_POSITION:
                         color = self.BLACK
                     if grid[row][column] == 1:
@@ -80,34 +92,34 @@ class Map:
                         color = self.RED
 
                     pygame.draw.rect(screen, color,
-                                     [(MARGIN + WIDTH) * column + MARGIN,
-                                      (MARGIN + HEIGHT) * row + MARGIN,
-                                      WIDTH,
-                                      HEIGHT])
+                                     [(self.MARGIN + self.WIDTH) * column + self.MARGIN,
+                                      (self.MARGIN + self.HEIGHT) * row + self.MARGIN,
+                                      self.WIDTH,
+                                      self.HEIGHT])
 
             for row in arrayColorFinalResult:
                 color = self.WHITE
                 pygame.draw.rect(screen, color,
-                                 [(MARGIN + WIDTH) * row[1] + MARGIN,
-                                  (MARGIN + HEIGHT) * row[0] + MARGIN,
-                                  WIDTH,
-                                  HEIGHT])
+                                 [(self.MARGIN + self.WIDTH) * row[1] + self.MARGIN,
+                                  (self.MARGIN + self.HEIGHT) * row[0] + self.MARGIN,
+                                  self.WIDTH,
+                                  self.HEIGHT])
 
             for row in arrayColorFrontier:
                 color = self.DARK_GREY
                 pygame.draw.rect(screen, color,
-                                 [(MARGIN + WIDTH) * row[1] + MARGIN,
-                                  (MARGIN + HEIGHT) * row[0] + MARGIN,
-                                  WIDTH,
-                                  HEIGHT])
+                                 [(self.MARGIN + self.WIDTH) * row[1] + self.MARGIN,
+                                  (self.MARGIN + self.HEIGHT) * row[0] + self.MARGIN,
+                                  self.WIDTH,
+                                  self.HEIGHT])
 
             for row in arrayColorActualPosition:
                 color = self.PINK
                 pygame.draw.rect(screen, color,
-                                 [(MARGIN + WIDTH) * row[1] + MARGIN,
-                                  (MARGIN + HEIGHT) * row[0] + MARGIN,
-                                  WIDTH,
-                                  HEIGHT])
+                                 [(self.MARGIN + self.WIDTH) * row[1] + self.MARGIN,
+                                  (self.MARGIN + self.HEIGHT) * row[0] + self.MARGIN,
+                                  self.WIDTH,
+                                  self.HEIGHT])
 
             font = pygame.font.SysFont("Arial MT Light", 20)
 

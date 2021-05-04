@@ -7,33 +7,8 @@ from mapMatrixUI import Map
 from datetime import timedelta
 
 
-# Usando a heurística Distância Manhattan
-def heuristic(nextPositionX, nextPositionY, targetPosition):
-    dx = abs(nextPositionX - targetPosition.getX())
-    dy = abs(nextPositionY - targetPosition.getY())
-
-    return dx + dy
 
 
-def getCostByValue(value):
-    if value == 1:
-        return 1
-    elif value == 2:
-        return 5
-    elif value == 3:
-        return 10
-    elif value == 4:
-        return 15
-
-    return 0
-
-
-def sortItems(item):
-    return item[0].cost
-
-
-def sortItemsTotal(item):
-    return item[0].totalCost
 
 
 class ManhattanDistance:
@@ -51,6 +26,19 @@ class ManhattanDistance:
     def getValueWithMatchFromMatrix(self, X, Y):
         return self.grid[X][Y]
 
+    def sortItems(self, item):
+        return item[0].cost
+
+    def sortItemsTotal(self, item):
+        return item[0].totalCost
+
+    # Usando a heurística Distância Manhattan
+    def heuristic(self, nextPositionX, nextPositionY, targetPosition):
+        dx = abs(nextPositionX - targetPosition.getX())
+        dy = abs(nextPositionY - targetPosition.getY())
+
+        return dx + dy
+
     def manhattanDistance(self, matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult,
                           arrayColorFrontier):
 
@@ -61,7 +49,7 @@ class ManhattanDistance:
         self.setMatrix(matrix.getSketchMatrix())
 
         LIST_FRONTIER[0].append(
-            self.makeItem(searchParams.getInitialPosition(), 0, [], searchParams.getTargetPosition()))
+            self.makeItem(matrix, searchParams.getInitialPosition(), 0, [], searchParams.getTargetPosition()))
 
         # para interações
         i = 0
@@ -102,7 +90,7 @@ class ManhattanDistance:
                     arrayColorActualPosition.clear()
                     arrayColorFinalResult.clear()
                     for item in item[0].historyCalls:
-                        soma += getCostByValue(self.getValueWithMatchFromMatrix(item[0], item[1]))
+                        soma += matrix.getCostByValue(self.getValueWithMatchFromMatrix(item[0], item[1]))
                         arrayColorFinalResult.append(item)
 
                     searchParams.setTotalCost(soma)
@@ -113,10 +101,10 @@ class ManhattanDistance:
 
             auxCallHistory = actual[0].getHistoryCall() + [actual[0].getActualPosition()]
             for item in actual[0].getChildren():
-                LIST_FRONTIER.append([self.makeItem(item, actual[0].getTotalCost(), auxCallHistory,
+                LIST_FRONTIER.append([self.makeItem(matrix, item, actual[0].getTotalCost(), auxCallHistory,
                                                     searchParams.getTargetPosition())])
 
-            LIST_FRONTIER.sort(key=sortItems)
+            LIST_FRONTIER.sort(key=self.sortItems)
 
             # array para print
             arrayColorFrontier.clear()
@@ -126,26 +114,26 @@ class ManhattanDistance:
         print("Data Inicio: ", dataIni)
         print("Data Fim: ", datetime.datetime.now())
         timeFinal = ((datetime.datetime.now() - timedelta(seconds=5)) - dataIni)
-        print("Tempo total passado: ",timeFinal)
+        print("Tempo total passado: ", timeFinal)
         searchParams.setTotalTime(timeFinal)
 
 
 
-    def makeItem(self, nextPosition, costToAdd, whoCalled, targetPosition):
+    def makeItem(self, matrixObject, nextPosition, costToAdd, whoCalled, targetPosition):
 
         NEXT_POSITION_X = nextPosition.getX()
         NEXT_POSITION_Y = nextPosition.getY()
 
         VALUE_POSITION = self.getValueWithMatchFromMatrix(nextPosition.getX(), nextPosition.getY())
-        TOTAL_COST_POSITION = getCostByValue(VALUE_POSITION) + costToAdd
-        COST_POSITION = heuristic(NEXT_POSITION_X, NEXT_POSITION_Y, targetPosition) + costToAdd
+        TOTAL_COST_POSITION = matrixObject.getCostByValue(VALUE_POSITION) + costToAdd
+        COST_POSITION = self.heuristic(NEXT_POSITION_X, NEXT_POSITION_Y, targetPosition) + costToAdd
 
         childrenArray = []
 
         item = ItemSearch(nextPosition.getActualPosition(), COST_POSITION, TOTAL_COST_POSITION, [], whoCalled)
 
         # verifica numero direita
-        if (NEXT_POSITION_Y + 1) <= 41:
+        if (NEXT_POSITION_Y + 1) <= matrixObject.getSizeX() - 1:
             childrenArray.append(ItemSearch([NEXT_POSITION_X, NEXT_POSITION_Y + 1],
                                             self.getValueWithMatchFromMatrix(NEXT_POSITION_X, NEXT_POSITION_Y + 1),
                                             0,
@@ -153,7 +141,7 @@ class ManhattanDistance:
                                             []))
 
         # verifica numero a abaixo
-        if (NEXT_POSITION_X + 1) <= 41:
+        if (NEXT_POSITION_X + 1) <= matrixObject.getSizeY() - 1:
             childrenArray.append(ItemSearch([NEXT_POSITION_X + 1, NEXT_POSITION_Y],
                                             self.getValueWithMatchFromMatrix(NEXT_POSITION_X + 1, NEXT_POSITION_Y),
                                             0,

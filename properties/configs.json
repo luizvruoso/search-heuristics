@@ -23,7 +23,7 @@
         },
         "general": {
                 "pygame": {
-                        "WINDOW_SIZE": "[505, 505]",
+                        "WINDOW_SIZE": [505, 550],
                         "WIDTH": 11,
                         "HEIGHT": 11,
                         "MARGIN": 1

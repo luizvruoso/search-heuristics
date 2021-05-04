@@ -24,7 +24,6 @@ def main():
 
     t.start()
 
-    print("maaaaaoizinho?", searchParams.getSearchMethod())
 
     if searchParams.getSearchMethod() == 'blind':
         search = BlindSearch()
