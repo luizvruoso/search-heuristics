@@ -1,5 +1,5 @@
 
-## SEARCH HEURISTICS - Introdução a IA
+## SEARCH HEURISTICS - Introdução à IA
 
 Nessa implementação, são propostas duas formas de encontrar um melhor caminho (com menor custo) baseada em uma matriz
 pré determinada. São elas: 
@@ -7,13 +7,21 @@ pré determinada. São elas:
 - Blind Search Uniform Cost - BFS
 - Manhattan Distance
 
+Além disso, cada quadrado possui uma cor diferente, representando um custo diferente:
+
+    Verde           (Custo: 1)
+    Marrom          (Custo: 5)
+    Azul            (Custo: 10)
+    Vermelho        (Custo: 15)
+
+E o caminho pode apenas ser encontrado andando-se na horizontal e/ou vertical.
 
 ### Base
-Baseada na implementação padrão, onde é selecionado um nó que posteriormente é expandido e seus filhos passam a compor uma __Fronteira__ para que possa ser expandida, selecionando um nó e a exapandindo.
+Baseada na implementação padrão, onde é selecionado um nó que posteriormente é expandido e seus filhos passam a compor uma __Fronteira__ para que possa ser expandida, selecionando um nó e a expandindo.
 
 ### Blind Search with Uniform Cost - BFS
 
-Baseando-se no método de custo uniforme, a fronteira dita acima é sempre ordenada pelo menor custo, o que proporciona que quando o nó de origem apareça na fornteira, esse seja já o melhor caminho
+Baseando-se no método de custo uniforme, a fronteira dita acima é sempre ordenada pelo menor custo, o que proporciona que quando o nó de origem apareça na fronteira, esse seja já o melhor caminho
 
 #### Heurística de Ralo
 
@@ -38,7 +46,18 @@ Outra implementação para melhoria do algoritimo, é utilizado uma poda que den
     
 Utiliza da implementação e lógica do BFS, entrentanto o cálculo de custo de um nó não é mais o correspondete na matriz, mas agora, seguindo o seguinte cálculo:
 
-__COLOCAR O CALCULO DO MANHATTAN__ 
+    dx = abs(posiçãoDoPróximoEmX - posiçãoFinalX)
+    dy = abs(posiçãoDoPróximoEmY - posiçãoFinalY)
+
+Onde **dx** é a diferença absoluta (exclui-se os sinais) entre a **posição final** no eixo X **menos** a **posição do próximo nó** no eixo X e **dy** é a diferença absoluta entre a **posição final** no eixo Y **menos** a **posição do próximo nó** no eixo Y.
+
+Depois, soma-se os dois deltas e têm-se o Manhattan:
+
+    dx + dy
+
+Vale lembrar que a heurística de Manhattan é somada ao custo do próximo nó na fronteira, tornando-os uma **busca com informação A***.
+
+Nota-se que usando a heurística de Distância Manhattan, há uma busca mais direcionada, onde as fronteiras de busca são mais concisas, resultando em um tempo menor de busca.
 
 <p align="center">
     <img src="./img-docs/img5.png"> <br>Exemplo de Fronteira
@@ -75,7 +94,7 @@ Para o exemplo acima, temos a seguinte configuração:
 Sendo o ponto marcado como preto a origem (0,0) e (41,41) o destino.
 - No rodapé temos os resultados obtidos na busca.
 
-- Como exemplo de *Fronteira/Borda* da busca temos a seguinte exeibição
+- Como exemplo de *Fronteira/Borda* da busca temos a seguinte exibição
 
 <p align="center">
     <img src="./img-docs/img2.png">
