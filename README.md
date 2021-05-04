@@ -9,10 +9,10 @@ pré determinada. São elas:
 
 Além disso, cada quadrado possui uma cor diferente, representando um custo diferente:
 
-    1 --> Verde           (Custo: 1)
-    2 --> Marrom          (Custo: 5)
-    3 --> Azul            (Custo: 10)
-    4 --> Vermelho        (Custo: 15)
+    Verde           (Custo: 1)
+    Marrom          (Custo: 5)
+    Azul            (Custo: 10)
+    Vermelho        (Custo: 15)
 
 ### Base
 Baseada na implementação padrão, onde é selecionado um nó que posteriormente é expandido e seus filhos passam a compor uma __Fronteira__ para que possa ser expandida, selecionando um nó e a exapandindo.
