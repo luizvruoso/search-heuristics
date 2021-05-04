@@ -38,7 +38,16 @@ Outra implementação para melhoria do algoritimo, é utilizado uma poda que den
     
 Utiliza da implementação e lógica do BFS, entrentanto o cálculo de custo de um nó não é mais o correspondete na matriz, mas agora, seguindo o seguinte cálculo:
 
-__COLOCAR O CALCULO DO MANHATTAN__ 
+    dx = abs(posiçãoDoPróximoEmX - posiçãoFinalX)
+    dy = abs(posiçãoDoPróximoEmY - posiçãoFinalY)
+
+Onde **dx** é a diferença absoluta (exclui-se os sinais) entre a **posição final** no eixo X **menos** a **posição do próximo nó** no eixo X e **dy** e **dy** é a diferença absoluta entre a **posição final** no eixo Y **menos** a **posição do próximo nó** no eixo Y e **dy** e **dy**.
+
+Depois, soma-se os dois deltas e têm-se o Manhattan:
+
+    dx + dy
+
+Vale lembrar que a heurística de Manhattan é somada ao custo do próximo nó na fronteira, tornando-os uma **busca com informação A***.
 
 <p align="center">
     <img src="./img-docs/img5.png"> <br>Exemplo de Fronteira
