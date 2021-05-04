@@ -9,7 +9,7 @@ pré determinada. São elas:
 
 Além disso, cada quadrado possui uma cor diferente, representando um custo diferente:
 
-    Verde           (Custo: 1)
+    ![#97E067](https://via.placeholder.com/15/97E067/000000?text=+) Verde           (Custo: 1)
     Marrom          (Custo: 5)
     Azul            (Custo: 10)
     Vermelho        (Custo: 15)
