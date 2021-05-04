@@ -16,11 +16,11 @@ Baseada na implementação padrão, onde é selecionado um nó que posteriorment
 Baseando-se no método de custo uniforme, a fronteira dita acima é sempre ordenada pelo menor custo, o que proporciona que quando o nó de origem apareça na fornteira, esse seja já o melhor caminho
 
 <p align="center">
-    <img src="./img-docs/img4.png"> Exemplo de Fronteira
+    <img src="./img-docs/img4.png"> <br>Exemplo de Fronteira
 </p>
 
 <p align="center">
-    <img src="./img-docs/img3.png"> Exemplo de Resposta
+    <img src="./img-docs/img3.png"> <br>Exemplo de Resposta
 </p>
 
  ### Manhattan Distance
@@ -31,11 +31,11 @@ Utiliza da implementação e lógica do BFS, entrentanto o cálculo de custo de 
 __COLOCAR O CALCULO DO MANHATTAN__ 
 
 <p align="center">
-    <img src="./img-docs/img5.png"> Exemplo de Fronteira
+    <img src="./img-docs/img5.png"> <br>Exemplo de Fronteira
 </p>
 
 <p align="center">
-    <img src="./img-docs/img6.png"> Exemplo de Resposta
+    <img src="./img-docs/img6.png"> <br>Exemplo de Resposta
 </p>
 
 __Pontos importantes para ambas as implementações:__
