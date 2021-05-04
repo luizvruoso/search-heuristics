@@ -14,6 +14,8 @@ Além disso, cada quadrado possui uma cor diferente, representando um custo dife
     Azul            (Custo: 10)
     Vermelho        (Custo: 15)
 
+E o caminho pode apenas ser encontrado andando-se na horizontal e/ou vertical.
+
 ### Base
 Baseada na implementação padrão, onde é selecionado um nó que posteriormente é expandido e seus filhos passam a compor uma __Fronteira__ para que possa ser expandida, selecionando um nó e a expandindo.
 
