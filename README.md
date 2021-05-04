@@ -15,11 +15,11 @@ Além disso, cada quadrado possui uma cor diferente, representando um custo dife
     Vermelho        (Custo: 15)
 
 ### Base
-Baseada na implementação padrão, onde é selecionado um nó que posteriormente é expandido e seus filhos passam a compor uma __Fronteira__ para que possa ser expandida, selecionando um nó e a exapandindo.
+Baseada na implementação padrão, onde é selecionado um nó que posteriormente é expandido e seus filhos passam a compor uma __Fronteira__ para que possa ser expandida, selecionando um nó e a expandindo.
 
 ### Blind Search with Uniform Cost - BFS
 
-Baseando-se no método de custo uniforme, a fronteira dita acima é sempre ordenada pelo menor custo, o que proporciona que quando o nó de origem apareça na fornteira, esse seja já o melhor caminho
+Baseando-se no método de custo uniforme, a fronteira dita acima é sempre ordenada pelo menor custo, o que proporciona que quando o nó de origem apareça na fronteira, esse seja já o melhor caminho
 
 #### Heurística de Ralo
 
