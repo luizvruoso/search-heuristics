@@ -31,14 +31,14 @@ def main():
                               args=[matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult,
                                     arrayColorFrontier])
         t1.start()
-    else:
-
+    elif (searchParams.getSearchMethod() == 'manhattan' ):
         search = ManhattanDistance()
         t1 = threading.Thread(target=search.manhattanDistance,
                                args=[matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult,
                                      arrayColorFrontier])
         t1.start()
-
+    else:
+        return
 
 def mainScreen(matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
     mapScreen = Map()

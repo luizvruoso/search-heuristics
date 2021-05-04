@@ -52,4 +52,10 @@ class Search:
     def getNextPosition(self):
         return self.nextPosition
 
+    def isInititalAndTargetValid(self, matrix):
+        if self.initialPosition.actualPosition[0] <= matrix.getSizeX() and self.initialPosition.actualPosition[0] >= 0:
+            if self.targetPosition.actualPosition[1] <= matrix.getSizeY() and self.targetPosition.actualPosition[1] >= 0:
+                return True
+
+        return False
 

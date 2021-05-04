@@ -4,6 +4,8 @@ from tkinter import Label
 from tkinter import ttk
 from utils.arrayTreatment import arrayContentToInt
 from search.item import ItemSearch
+import win32api
+
 import copy
 
 # 1 --> Verde           (Custo: 1)
@@ -56,7 +58,12 @@ class OpenScreen:
         self.searchParams.setInitialPosition(self.startPosition)
         self.searchParams.setTargetPosition(self.finishPosition)
 
-        quit()
+        if self.searchParams.isInititalAndTargetValid(self.matrixObject):
+            quit()
+        else:
+            win32api.MessageBox(0, 'Posição inicial ou final invalida', 'Erro')
+            self.searchParams.setSearchMethod('Error')
+            quit()
 
     def screen(self, matrix, searchParams):
         global screen
