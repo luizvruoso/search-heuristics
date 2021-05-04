@@ -6,6 +6,7 @@ from search.matrix import Matrix
 from search.search import Search
 import pygame, threading
 
+
 def main():
 
     arrayColorFinalResult = []
@@ -29,9 +30,12 @@ def main():
 
     #t1.start()
     
+
+    # thread = aux(openScreen)
+
+    t = threading.Thread(target=mainScreen,
+                         args=[openScreen, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier])
     t.start()
-    search = BlindSearch()
-    t1 = threading.Thread(target=search.blindSearch, args=[matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier] )
 
     # search = BlindSearch()
     # t1 = threading.Thread(target=search.blindSearch, args=[openScreen.startPosition, openScreen.finishPosition, openScreen.sketchMatrix, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier] )
@@ -42,6 +46,8 @@ def main():
                                 arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier])
 
     t1.start()
+
+    # search.blindSearch(openScreen.startPosition, openScreen.finishPosition, openScreen.sketchMatrix, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier)
 
 def mainScreen(matrix, searchParams, arrayColorActualPosition, arrayColorFinalResult, arrayColorFrontier):
     mapScreen = Map()

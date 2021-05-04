@@ -20,6 +20,7 @@ class BlindSearch():
         if(value == 1):
             return 1
         elif(value == 2):
+
             return 5
         elif value == 3:
             return 10
